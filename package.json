@@ -1,7 +1,7 @@
 {
   "name": "discordbot",
   "version": "1.0.0",
-  "engines":{
+  "engines": {
     "node": "14.16.1"
   },
   "description": "",
@@ -13,11 +13,11 @@
   "license": "ISC",
   "dependencies": {
     "@discordjs/opus": "^0.3.3",
-    "discord.js": "^12.2.0",
+    "discord.js": "^12.5.3",
     "dotenv": "^16.0.0",
-    "ffmpeg-static": "^4.2.7",
+    "ffmpeg-static": "^5.0.0",
     "nodemon": "^2.0.15",
-    "yt-search": "^2.10.1",
-    "ytdl-core": "^4.10.1"
+    "yt-search": "^2.10.3",
+    "ytdl-core": "^4.11.0"
   }
 }

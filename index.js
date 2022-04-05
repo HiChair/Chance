@@ -13,8 +13,72 @@ for (const file of commandFiles ){
 
 const prefix = "-";
 
+var timerId;
+function kickRoyce(newMember){
+    console.log('working');
+    newMember.member.voice.kick();
+}
+
 client.once('ready', () => {
     console.log('Chance is online!');
+});
+// me 539995396630380572
+// rdog 228671751326924811
+client.on('voiceStateUpdate', (oldMember, newMember) =>{
+    let oldVoice = oldMember.channelID; 
+    let newVoice = newMember.channelID; 
+    let rdogID = '228671751326924811'
+    let channelName = 'general'
+
+
+
+    const d = new Date();
+    let day = d.getDate();
+    let month = d.getMonth();
+
+    // Royce Appreciation Day
+    if (day === 5 && month === 3){
+        if (oldVoice === null){
+            //user joins
+            if (newMember.member.id === rdogID){
+                const channel = client.channels.cache.find(channel => channel.name === channelName)
+                channel.send('Hi Royce, I appreciate you!');
+            }
+        }
+        else if(newVoice === null) {
+            //user disconnects
+            if (newMember.member.id === rdogID){
+                const channel = client.channels.cache.find(channel => channel.name === channelName)
+                channel.send('Bye Royce, I still appreciate you!');
+            }
+        }
+    }
+     // Fuck Royce Day
+    else if (day === 6 && month === 3){
+        if (oldVoice === null){
+            //user joins
+            if (newMember.member.id === rdogID){
+
+                const channel = client.channels.cache.find(channel => channel.name === channelName)
+                channel.send('Oh god not Royce, fuck off');
+                // sets delay between 30 60 minutes
+                let delay = Math.floor(Math.random() * (3600000 - 1800000 + 1 ) + 1800000);
+                console.log(delay);
+                this.timerId = setTimeout(() => {kickRoyce(newMember)}, delay);
+            }
+        }
+        else if(newVoice === null) {
+            //user disconnects
+            if (newMember.member.id === rdogID){
+                const channel = client.channels.cache.find(channel => channel.name === channelName)
+                channel.send('Fuck you Royce');
+                clearTimeout(this.timerId);
+            }
+        }
+    }
+
+    
+
 });
 
 client.on('message' , message => {
