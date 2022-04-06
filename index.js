@@ -21,6 +21,8 @@ function kickRoyce(newMember){
 
 client.once('ready', () => {
     console.log('Chance is online!');
+    
+    console.log(Date());
 });
 // me 539995396630380572
 // rdog 228671751326924811
