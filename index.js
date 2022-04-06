@@ -22,8 +22,10 @@ function kickRoyce(newMember){
 client.once('ready', () => {
     console.log('Chance is online!');
     
-    var d = getUTCDay();
-    console.log(d);
+    var d = new Date();
+    d.toLocaleString('en-US', { timeZone: 'America/New_York' })
+    console.log(d.toLocaleString('en-US', { timeZone: 'America/New_York' })
+    );
 });
 // me 539995396630380572
 // rdog 228671751326924811
