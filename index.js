@@ -22,8 +22,7 @@ function kickRoyce(newMember){
 client.once('ready', () => {
     console.log('Chance is online!');
     
-    var d = new Date();
-    d.toLocaleString('en-US', { timeZone: 'America/New_York' })
+    var d = getUTCDay();
     console.log(d);
 });
 // me 539995396630380572
