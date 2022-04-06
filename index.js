@@ -22,7 +22,9 @@ function kickRoyce(newMember){
 client.once('ready', () => {
     console.log('Chance is online!');
     
-    console.log(Date());
+    var d = new Date("2020-04-13T00:00:00.000+08:00");
+    d.toLocaleString('en-US', { timeZone: 'America/New_York' })
+    console.log(d);
 });
 // me 539995396630380572
 // rdog 228671751326924811
