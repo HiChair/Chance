@@ -21,11 +21,6 @@ function kickRoyce(newMember){
 
 client.once('ready', () => {
     console.log('Chance is online!');
-    
-    var d = new Date();
-    let s = d.toLocaleString('en-US', { timeZone: 'America/New_York' });
-    const myArray = s.split(" ");
-    console.log(myArray[0]);
 });
 // me 539995396630380572
 // rdog 228671751326924811
@@ -38,11 +33,11 @@ client.on('voiceStateUpdate', (oldMember, newMember) =>{
 
 
     const d = new Date();
-    let day = d.getDate();
-    let month = d.getMonth();
+    let s = d.toLocaleString('en-US', { timeZone: 'America/New_York' });
+    const myArray = s.split(" ");
 
     // Royce Appreciation Day
-    if (day === 5 && month === 3){
+    if (myArray[0]=== '4/5/2022,'){
         if (oldVoice === null){
             //user joins
             if (newMember.member.id === rdogID){
@@ -59,7 +54,7 @@ client.on('voiceStateUpdate', (oldMember, newMember) =>{
         }
     }
      // Fuck Royce Day
-    else if (day === 6 && month === 3){
+    else if (myArray[0]=== '4/6/2022,'){
         if (oldVoice === null){
             //user joins
             if (newMember.member.id === rdogID){
