@@ -23,9 +23,9 @@ client.once('ready', () => {
     console.log('Chance is online!');
     
     var d = new Date();
-    d.toLocaleString('en-US', { timeZone: 'America/New_York' })
-    console.log(d.toLocaleString('en-US', { timeZone: 'America/New_York' })
-    );
+    let s = d.toLocaleString('en-US', { timeZone: 'America/New_York' });
+    const myArray = s.split(" ");
+    console.log(myArray[0]);
 });
 // me 539995396630380572
 // rdog 228671751326924811
