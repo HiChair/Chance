@@ -5,7 +5,7 @@ var songQueue = [];
 var titleQueue = [];
 var voiceChannel;
 var Message;
-
+var vid 
 module.exports = {
     name: 'play',
     description: 'plays music',
@@ -24,48 +24,59 @@ module.exports = {
         if (!args.length) return message.channel.send("You need to tell me to play something, dipshit...");
         if (!message.member.voice.channel) return message.channel.send("You need to be in channel to play music");
 
+
         const videoFinder = async (query) => {
             const videoResult = await ytSearch(query);
             return (videoResult.videos.length > 1) ? videoResult.videos[0] : null;
         }
-        const video = await videoFinder(args.join(' '));
+       
+        if (args[0].includes("https://")){
+            const splitArgs = args[0].split("&list")
+            video  = await videoFinder(splitArgs[0]);
+            vid = true
+        }
+        else{
+            video = await videoFinder(args.join(' '));
+            vid = false
+        }
         if (songQueue.length === 0) { this.musicPlaying = false; }
-        this.queueSong(video,args);
-
+        this.queueSong(video,vid);
     },
     /*
     Adds song to queue as well as video title
     -needs optimized 
     */
-    async queueSong(video,args) {
-        try{
-            const songInfo = await ytdl.getInfo(args);
-            const song = {
-                title: songInfo.videoDetails.title,
-                url: songInfo.videoDetails.video_url,
-            };
-            if(song){
-                console.log(`Adding song ${song.url}`);
-                songQueue.push(ytdl(song.url, {filter: 'audioonly' }));
-                titleQueue.push(song.title);
+    async queueSong(video,vid) {
+        // checks if args links to a video
+        if (vid){
+            if (video) {
+                console.log(`Adding video ${video.url}`);
+                songQueue.push(ytdl(video.url, { filter: 'audioonly' }));
+                titleQueue.push(video.title);
                 this.playSong('queue');
-                return;
+            } 
+            else{
+                Message.channel.send("No video results found");
             }
-        }catch(err){
-            err.stack;
         }
-        
-        if (video) {
-            console.log(`Adding video ${video.url}`);
-            songQueue.push(ytdl(video.url, { filter: 'audioonly' }));
-            titleQueue.push(video.title);
-            this.playSong('queue');
-        } 
         else{
-            Message.channel.send("No video results found");
+            try{
+                const songInfo = await ytdl.getInfo(video.url);
+                const song = {
+                    title: songInfo.videoDetails.title,
+                    url: songInfo.videoDetails.video_url,
+                };
+                if(song){
+                    console.log(`Adding song ${song.url}`);
+                    songQueue.push(ytdl(song.url, {filter: 'audioonly' }));
+                    titleQueue.push(song.title);
+                    this.playSong('queue');
+                    return;
+                }
+            }catch(err){
+                console.log(err.stack);
+            }
         }
-          
-
     },
     //removed seek: 0 from connection.play options
     /*
@@ -96,7 +107,7 @@ module.exports = {
                     .on('error', error => console.error(error));
             }
             else {
-                await Message.reply(`${titleQueue[titleQueue.length-1]}*** has been added to the queue.`)
+                Message.reply(`${titleQueue[titleQueue.length-1]}*** has been added to the queue.`)
             }
             
         } else if (command === 'pause') {
